@@ -23,7 +23,6 @@ const Peaks = () => {
   }, []);
 
   const renderData = ({item}) => {
-    console.log(item);
     return (
       <View
         style={
@@ -55,11 +54,6 @@ const Peaks = () => {
 
   return (
     <View>
-      <View style={styles.header}>
-        <Image style={styles.logo} source={require('../images/logo.jpg')} />
-        <Text style={styles.txt}>E-Zirve</Text>
-        <Text style={styles.txt}>DAĞCILIK YÖNETİM SİSTEMİ</Text>
-      </View>
       <View style={styles.container}>
         <ImageBackground
           style={styles.mount}
@@ -89,19 +83,6 @@ const Peaks = () => {
 export default Peaks;
 
 const styles = StyleSheet.create({
-  header: {
-    backgroundColor: 'red',
-    height: 80,
-    width: '100%',
-    flexDirection: 'row',
-  },
-  logo: {
-    width: 70,
-    height: 70,
-    borderRadius: 60,
-    marginLeft: 25,
-    marginTop: 16,
-  },
   flag: {
     width: 30,
     height: 30,
@@ -125,15 +106,11 @@ const styles = StyleSheet.create({
   topcont: {
     flexDirection: 'row',
     backgroundColor: 'white',
+    marginTop: 16,
+    marginBottom: 16,
   },
   dataView: {paddingHorizontal: 20, paddingVertical: 5},
-  txt: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 30,
-    marginLeft: 10,
-  },
+
   headtxt: {
     marginLeft: 115,
     width: '100%',

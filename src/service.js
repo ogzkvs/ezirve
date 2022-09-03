@@ -8,18 +8,12 @@ const get = query => {
   });
 };
 
-const post = (endpoint, data) => {
-  var myHeaders = new Headers();
-  myHeaders.append('Content-Type', 'application/json');
-
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: JSON.stringify(data),
-    redirect: 'follow',
-  };
-  return fetch(settings.api + endpoint, requestOptions).then(response =>
-    response.json(),
-  );
+const getLogin = query => {
+  return fetch(settings.getLogin + query, {
+    method: 'GET',
+  }).then(response => {
+    return response.json();
+  });
 };
-export {get, post};
+
+export {get, getLogin};

@@ -7,50 +7,41 @@ import {
   ScrollView,
   ImageBackground,
   Button,
+  Alert,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {post} from '../service';
+import React from 'react';
+import {getLogin} from '../service';
 import Peaks from './Peaks';
 
 const Login = ({navigation}) => {
-  const [data, setData] = useState([]);
-  const [idcontrol, setIdcontrol] = useState(false);
-  const [pwcontrol, setPwcontrol] = useState(false);
-  const [value, setValue] = useState('');
-  const [pw, setPw] = useState('');
-
-  useEffect(() => {
-    const fetchData = () => {
-      getLogin('tc=12354676532&sifre=123').then(result => {
-        setData(result.kullanici);
-      });
-    };
-    fetchData();
-  }, []);
+  const login = React.useRef({
+    id: '',
+    pw: '',
+  });
 
   const tcControl = () => {
-    if (value === '12354676532') {
-      setIdcontrol(true);
-    }
-    if (pw === '123') {
-      setPwcontrol(true);
-    }
-    if (idcontrol === true && pwcontrol === true) {
-      console.log('giriş sağlandı');
-      setIdcontrol(false);
-      setPwcontrol(false);
-      navigation.navigate(Peaks);
-      setValue('');
-      setPw('');
-    } else {
-      console.log('no giriş');
-    }
+    getLogin('tc=' + login.id + '&sifre=' + login.pw).then(data => {
+      if (data.aciklama === 'Başarılı') {
+        {
+          navigation.navigate(Peaks);
+        }
+      } else {
+        Alert.alert('Bilgi', 'Bu Koşula uyan kullanıcı bulunamadı', [
+          {text: 'Tamam'},
+        ]);
+      }
+    });
   };
 
   return (
     <ScrollView>
       <View style={styles.header}>
-        <Image style={styles.logo} source={require('../images/logo.jpg')} />
+        <Image
+          style={styles.logo}
+          source={{
+            uri: 'https://i0.wp.com/www.tdf.gov.tr/wp-content/uploads/2017/10/tdf2017_logo.jpg',
+          }}
+        />
         <Text style={styles.txt}>E-Zirve</Text>
       </View>
       <View style={styles.headtxt}>
@@ -64,22 +55,21 @@ const Login = ({navigation}) => {
             <Text style={styles.id}>Kullanıcı Adı</Text>
             <TextInput
               style={styles.input}
-              onChangeText={value => setValue(value)}
-              value={value}
+              onChangeText={value => (login.id = value)}
+              value={login.id}
             />
             <Text style={styles.id}>Şifre</Text>
 
             <TextInput
               style={styles.input}
-              onChangeText={pw => setPw(pw)}
-              value={pw}
+              onChangeText={pw => (login.pw = pw)}
+              value={login.pw}
             />
 
             <View style={{marginTop: 35}}>
               <Button
                 title="GİRİŞ"
                 color="blue"
-                accessibilityLabel="Learn more about this purple button"
                 onPress={() => {
                   tcControl();
                 }}
@@ -96,15 +86,15 @@ export default Login;
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: 'red',
+    backgroundColor: '#e53935',
     height: 60,
     width: '100%',
     flexDirection: 'row',
   },
   logo: {
-    width: 90,
-    height: 90,
-    borderRadius: 60,
+    width: 70,
+    height: 70,
+    borderRadius: 70,
     marginLeft: 25,
     marginTop: 16,
   },
